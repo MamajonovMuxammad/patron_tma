@@ -1,4 +1,4 @@
-import { Branch, Barber, ServiceItem, Slot, Booking, DashboardStats } from '../types';
+import { Branch, Barber, ServiceItem, Slot, Booking, DashboardStats, BarberAuthUser } from '../types';
 
 const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
 
@@ -9,11 +9,14 @@ export const INITIAL_BRANCHES: Branch[] = [
     nameUz: "«Maksim Gorkiy» filiali (Buyuk Ipak Yo'li)",
     addressRu: "ул. Мирзо Улугбека, 49/3",
     addressUz: "Mirzo Ulug'bek ko'chasi, 49/3",
-    landmarkRu: "Буюк Ипак Йули, рядом с метро",
-    landmarkUz: "Buyuk Ipak Yo'li metro yaqinida",
+    landmarkRu: "Буюк Ипак Йули, метро в 2 минутах",
+    landmarkUz: "Buyuk Ipak Yo'li metrosi yaqinida",
     phone: "+998 95 023 20 00",
     openingTime: "09:00",
     closingTime: "21:00",
+    lat: 41.3268,
+    lng: 69.3285,
+    photoUrl: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&auto=format&fit=crop&q=80",
     mapUrl2Gis: "https://2gis.uz/tashkent/branches/70000001083921829",
     mapUrlYandex: "https://yandex.uz/maps/10335/tashkent"
   },
@@ -23,11 +26,14 @@ export const INITIAL_BRANCHES: Branch[] = [
     nameUz: "«Qorasuv» filiali",
     addressRu: "массив Карасув-1",
     addressUz: "Qorasuv-1 massivi",
-    landmarkRu: "Напротив Korzinka",
-    landmarkUz: "Korzinka ro'parasida",
+    landmarkRu: "Напротив супермаркета Korzinka",
+    landmarkUz: "Korzinka supermarketi ro'parasida",
     phone: "+998 99 595 40 00",
     openingTime: "09:00",
     closingTime: "21:00",
+    lat: 41.3412,
+    lng: 69.3482,
+    photoUrl: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&auto=format&fit=crop&q=80",
     mapUrl2Gis: "https://2gis.uz/tashkent",
     mapUrlYandex: "https://yandex.uz/maps"
   },
@@ -42,6 +48,9 @@ export const INITIAL_BRANCHES: Branch[] = [
     phone: "+998 70 037 60 00",
     openingTime: "09:00",
     closingTime: "21:00",
+    lat: 41.3338,
+    lng: 69.3370,
+    photoUrl: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&auto=format&fit=crop&q=80",
     mapUrl2Gis: "https://2gis.uz/tashkent",
     mapUrlYandex: "https://yandex.uz/maps"
   }
@@ -52,8 +61,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     id: 1,
     nameRu: "Мужская стрижка",
     nameUz: "Erkaklar soch turmagi",
-    descriptionRu: "Мытье, индивидуальный подбор формы, стрижка и премиум-стайлинг",
-    descriptionUz: "Bosh yuvish, individual soch turmagi tanlash, turmaklash",
+    descriptionRu: "Мытье головы, индивидуальный подбор формы, стрижка ножницами и машинкой, стайлинг",
+    descriptionUz: "Bosh yuvish, individual soch turmagi tanlash, qaychi va mashinka bilan qirqish, turmaklash",
     durationMinutes: 45,
     priceUzs: 100000,
     category: "HAIRCUT"
@@ -62,8 +71,8 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     id: 2,
     nameRu: "Стрижка + Борода (Комплекс)",
     nameUz: "Kompleks: Soch + Soqol",
-    descriptionRu: "Модельная стрижка + распаривание и моделирование бороды опасной бритвой",
-    descriptionUz: "To'liq obraz: soch turmagi + soqol tekislash va parvarish",
+    descriptionRu: "Модельная стрижка + распаривание горячим полотенцем и моделирование опасной бритвой",
+    descriptionUz: "To'liq obraz: soch turmagi + soqol tekislash va maxsus parvarish",
     durationMinutes: 60,
     priceUzs: 140000,
     category: "COMBO"
@@ -72,7 +81,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     id: 3,
     nameRu: "Моделирование бороды",
     nameUz: "Soqol tekislash",
-    descriptionRu: "Четкие контуры, стрижка триммером и бритвой, нанесение ухаживающего масла",
+    descriptionRu: "Четкие контуры, стрижка триммером и бритвой, нанесение ухаживающего премиум-масла",
     descriptionUz: "Aniq chiziqlar, trimmer va ustara bilan tekislash, maxsus moy surtish",
     durationMinutes: 30,
     priceUzs: 60000,
@@ -93,7 +102,7 @@ export const INITIAL_SERVICES: ServiceItem[] = [
     nameRu: "Чистка лица Black Mask + Воск",
     nameUz: "Yuz tozalash (Black Mask + Mum)",
     descriptionRu: "Глубокое очищение пор черной маской, удаление волос из носа и ушей воском",
-    descriptionUz: "Qora niqob bilan yuzni chuqur tozalash, mum bilan parvarish",
+    descriptionUz: "Qora niqob bilan yuzni chuqur tozalash, quloq va burun tuklarini mum bilan tozalash",
     durationMinutes: 30,
     priceUzs: 60000,
     category: "SPA"
@@ -111,8 +120,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 184,
       specialtiesRu: "Skin Fade, Оформление бороды",
       specialtiesUz: "Skin Fade, Soqol tekislash",
-      avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-      branchId: 1
+      avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      branchId: 1,
+      username: "shohaziz"
     },
     {
       id: 102,
@@ -123,8 +133,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 142,
       specialtiesRu: "Классика, Fade, Уход за кожей",
       specialtiesUz: "Klassika, Fade, Teri parvarishi",
-      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      branchId: 1
+      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      branchId: 1,
+      username: "sayfulla"
     },
     {
       id: 103,
@@ -135,8 +146,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 98,
       specialtiesRu: "Мужские стрижки, Детская",
       specialtiesUz: "Erkaklar soch turmagi, Bolalar",
-      avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-      branchId: 1
+      avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      branchId: 1,
+      username: "sardor"
     }
   ],
   2: [
@@ -149,8 +161,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 162,
       specialtiesRu: "Fade, Борода, Black Mask",
       specialtiesUz: "Fade, Soqol, Black Mask",
-      avatarUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80",
-      branchId: 2
+      avatarUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      branchId: 2,
+      username: "zhavohir"
     },
     {
       id: 202,
@@ -161,8 +174,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 120,
       specialtiesRu: "Классика, Текстура",
       specialtiesUz: "Klassika, Tekstura",
-      avatarUrl: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80",
-      branchId: 2
+      avatarUrl: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80",
+      branchId: 2,
+      username: "doston"
     },
     {
       id: 203,
@@ -173,8 +187,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 84,
       specialtiesRu: "Стрижка, Стайлинг",
       specialtiesUz: "Soch turmagi, Stayling",
-      avatarUrl: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80",
-      branchId: 2
+      avatarUrl: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+      branchId: 2,
+      username: "bekzod"
     }
   ],
   3: [
@@ -187,8 +202,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 210,
       specialtiesRu: "Королевское бритье, Fade",
       specialtiesUz: "Qirollik soqol olishi, Fade",
-      avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
-      branchId: 3
+      avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+      branchId: 3,
+      username: "ulugbek"
     },
     {
       id: 302,
@@ -199,8 +215,9 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 134,
       specialtiesRu: "Борода, Классика",
       specialtiesUz: "Soqol, Klassika",
-      avatarUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
-      branchId: 3
+      avatarUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
+      branchId: 3,
+      username: "alisher"
     },
     {
       id: 303,
@@ -211,14 +228,15 @@ export const INITIAL_BARBERS: Record<number, Barber[]> = {
       reviewsCount: 95,
       specialtiesRu: "Модельные стрижки, Укладка",
       specialtiesUz: "Model soch turmagi, Turmak",
-      avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-      branchId: 3
+      avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+      branchId: 3,
+      username: "timur"
     }
   ]
 };
 
 // Initial bookings for local mock/demo
-const STORAGE_KEY = 'patron_mock_bookings_v2';
+const STORAGE_KEY = 'patron_mock_bookings_v3';
 function getStoredBookings(): Booking[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -251,7 +269,8 @@ function getStoredBookings(): Booking[] {
       totalPriceUzs: 140000,
       status: "CONFIRMED",
       isWalkIn: false,
-      reminderSent: true
+      reminderSent: true,
+      notes: "Классический Fade + масло для бороды"
     },
     {
       id: 2,
@@ -300,7 +319,30 @@ function getStoredBookings(): Booking[] {
       status: "WALK_IN_BLOCKED",
       isWalkIn: true,
       reminderSent: true,
-      notes: "Заблокировано администратором: гость зашел с улицы"
+      notes: "Заблокировано барбером: зашел клиент с улицы"
+    },
+    {
+      id: 4,
+      bookingNumber: "PT-7719",
+      branchId: 1,
+      branchNameRu: "Филиал «Максим Горький»",
+      branchNameUz: "«Maksim Gorkiy» filiali",
+      branchAddressRu: "ул. Мирзо Улугбека, 49/3",
+      branchAddressUz: "Mirzo Ulug'bek ko'chasi, 49/3",
+      branchPhone: "+998 95 023 20 00",
+      barberId: 103,
+      barberName: "Сардор",
+      barberTitleRu: "Barber",
+      clientName: "Фарход Умаров",
+      clientPhone: "+998 97 777 55 44",
+      bookingDate: today,
+      startTime: "16:00",
+      endTime: "16:45",
+      totalDurationMinutes: 45,
+      totalPriceUzs: 100000,
+      status: "CONFIRMED",
+      isWalkIn: false,
+      reminderSent: true
     }
   ];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
@@ -315,7 +357,19 @@ export const api = {
   async getBranches(): Promise<Branch[]> {
     try {
       const res = await fetch(`${API_BASE}/branches`);
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        // Merge coordinates and photos
+        return data.map((b: any) => {
+          const match = INITIAL_BRANCHES.find(x => x.id === b.id);
+          return {
+            ...b,
+            lat: match?.lat || 41.3268,
+            lng: match?.lng || 69.3285,
+            photoUrl: match?.photoUrl || INITIAL_BRANCHES[0].photoUrl
+          };
+        });
+      }
     } catch {}
     return INITIAL_BRANCHES;
   },
@@ -343,7 +397,7 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    // Fallback slot calculator with real math
+    // Accurate interval math fallback
     const slots: Slot[] = [];
     const barbers = barberId
       ? (INITIAL_BARBERS[branchId] || INITIAL_BARBERS[1]).filter(b => b.id === barberId)
@@ -359,7 +413,6 @@ export const api = {
         const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
         const slotEndMin = totalStartMin + duration;
 
-        // Check availability
         let freeBarber: Barber | undefined;
         for (const barber of barbers) {
           const hasConflict = bookings.some(b => {
@@ -410,7 +463,6 @@ export const api = {
       if (res.ok) return await res.json();
     } catch {}
 
-    // Fallback create
     const branch = INITIAL_BRANCHES.find(b => b.id === data.branchId) || INITIAL_BRANCHES[0];
     const barbers = INITIAL_BARBERS[branch.id] || INITIAL_BARBERS[1];
     const barber = data.barberId ? barbers.find(b => b.id === data.barberId) : barbers[0];
@@ -534,14 +586,13 @@ export const api = {
     }
   },
 
-  async getDashboard(branchId: number, date: string): Promise<DashboardStats> {
-    try {
-      const res = await fetch(`${API_BASE}/admin/dashboard?branchId=${branchId}&date=${date}`);
-      if (res.ok) return await res.json();
-    } catch {}
-
+  async getDashboard(branchId: number, date: string, barberId?: number): Promise<DashboardStats> {
     const branch = INITIAL_BRANCHES.find(b => b.id === branchId) || INITIAL_BRANCHES[0];
-    const bookings = getStoredBookings().filter(b => b.branchId === branchId && b.bookingDate === date);
+    let bookings = getStoredBookings().filter(b => b.branchId === branchId && b.bookingDate === date);
+
+    if (barberId) {
+      bookings = bookings.filter(b => b.barberId === barberId);
+    }
 
     let confirmed = 0;
     let pending = 0;
@@ -582,5 +633,9 @@ export const api = {
       quickAvailableSeatText: "Максим Горький: через 15 мин у барбера Шохазиза",
       bookings
     };
+  },
+
+  getAllBookings(): Booking[] {
+    return getStoredBookings();
   }
 };

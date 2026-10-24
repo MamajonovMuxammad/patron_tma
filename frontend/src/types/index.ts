@@ -1,6 +1,6 @@
 export type Language = 'ru' | 'uz';
 
-export type AppMode = 'client' | 'admin';
+export type TabType = 'home' | 'booking' | 'services' | 'my-bookings' | 'barber';
 
 export type BookingStatus =
   | 'PENDING_CONFIRMATION'
@@ -21,6 +21,9 @@ export interface Branch {
   phone: string;
   openingTime: string;
   closingTime: string;
+  lat: number;
+  lng: number;
+  photoUrl: string;
   mapUrl2Gis?: string;
   mapUrlYandex?: string;
 }
@@ -35,7 +38,8 @@ export interface Barber {
   specialtiesRu: string;
   specialtiesUz: string;
   avatarUrl: string;
-  branchId?: number;
+  branchId: number;
+  username?: string;
 }
 
 export interface ServiceItem {
@@ -108,6 +112,19 @@ export interface DashboardStats {
   availableSlotsCount: number;
   quickAvailableSeatText: string;
   bookings: Booking[];
+}
+
+export interface BarberAuthUser {
+  id: number;
+  barberId: number;
+  name: string;
+  titleRu: string;
+  titleUz: string;
+  branchId: number;
+  branchNameRu: string;
+  avatarUrl: string;
+  rating: number;
+  role: 'barber' | 'admin';
 }
 
 export interface TelegramUser {
