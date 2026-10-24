@@ -17,8 +17,7 @@ export const INITIAL_BRANCHES: Branch[] = [
     lat: 41.3268,
     lng: 69.3285,
     photoUrl: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&auto=format&fit=crop&q=80",
-    mapUrl2Gis: "https://2gis.uz/tashkent/branches/70000001083921829",
-    mapUrlYandex: "https://yandex.uz/maps/10335/tashkent"
+    mapUrlYandex: "https://yandex.uz/maps/?text=ул.+Мирзо+Улугбека+49/3+Ташкент"
   },
   {
     id: 2,
@@ -34,8 +33,7 @@ export const INITIAL_BRANCHES: Branch[] = [
     lat: 41.3412,
     lng: 69.3482,
     photoUrl: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&auto=format&fit=crop&q=80",
-    mapUrl2Gis: "https://2gis.uz/tashkent",
-    mapUrlYandex: "https://yandex.uz/maps"
+    mapUrlYandex: "https://yandex.uz/maps/?text=массив+Карасув-1+Ташкент"
   },
   {
     id: 3,
@@ -51,8 +49,7 @@ export const INITIAL_BRANCHES: Branch[] = [
     lat: 41.3338,
     lng: 69.3370,
     photoUrl: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&auto=format&fit=crop&q=80",
-    mapUrl2Gis: "https://2gis.uz/tashkent",
-    mapUrlYandex: "https://yandex.uz/maps"
+    mapUrlYandex: "https://yandex.uz/maps/?text=ул.+Шуъала+Салом+чайхана+Ташкент"
   }
 ];
 

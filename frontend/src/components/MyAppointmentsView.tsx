@@ -126,13 +126,15 @@ export const MyAppointmentsView: React.FC<MyAppointmentsViewProps> = ({
                 {!isCancelled && !isCompleted && (
                   <div className="pt-2 flex items-center gap-2 border-t border-white/10">
                     <a
-                      href="https://2gis.uz/tashkent"
+                      href={`https://yandex.uz/maps/?text=${encodeURIComponent(booking.branchAddressRu + ' Ташкент')}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2 px-3 rounded-xl bg-cardDark border border-cardBorder hover:border-neonPurple text-[11px] font-bold text-white flex items-center justify-center gap-1.5 transition-all"
                     >
-                      <Navigation className="w-3 h-3 text-neonPurpleLight" />
-                      <span>{t.route2gis}</span>
+                      <svg className="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                      </svg>
+                      <span>{t.routeYandex}</span>
                     </a>
 
                     <button

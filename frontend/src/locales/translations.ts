@@ -37,7 +37,7 @@ export const translations = {
     myBookings: "Мои записи",
     noBookings: "У вас пока нет активных записей",
     route2gis: "В 2ГИС",
-    routeYandex: "В Яндекс.Карты",
+    routeYandex: "Маршрут в Яндекс.Картах",
     cancelBookingBtn: "Отменить запись",
     bookingCancelled: "Запись отменена",
     adminTitle: "Дашборд филиала на сегодня",
